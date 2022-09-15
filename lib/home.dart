@@ -1,4 +1,7 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project_wallet/screen/menu.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,35 +14,51 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.indigo,
+        elevation: 0,
+        title: AnimatedTextKit(
+          animatedTexts: [
+            WavyAnimatedText("Home",
+                speed: Duration(milliseconds: 700),
+                textStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold))
+          ],
+          repeatForever: true,
+        ),
+        actions: [
+          FloatingActionButton(
+              backgroundColor: Colors.indigo,
+              elevation: 0,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MenuScreen()));
+              },
+              child: const Icon(Icons.notifications_on_sharp))
+        ],
+      ),
+      drawer: const Drawer(),
       body: Stack(
         children: [
           Container(
             decoration: const BoxDecoration(
                 gradient: SweepGradient(
                     center: Alignment.topCenter,
-                    colors: [Colors.blue, Colors.greenAccent],
+                    colors: [Colors.blue, Colors.white],
                     startAngle: 1,
                     endAngle: 2.5)),
             // color: Colors.blue[300],
             // height: 300,
             child: Column(children: [
               Padding(
-                padding: const EdgeInsets.all(30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Icon(Icons.menu, color: Colors.white, size: 30),
-                    Icon(Icons.notifications, color: Colors.white, size: 30),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 30, right: 30),
+                padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
                     Text("Wallet",
-                        style: TextStyle(fontSize: 35, color: Colors.white)),
+                        style: TextStyle(fontSize: 35, color: Colors.blue)),
                     Icon(Icons.add, color: Colors.white, size: 30),
                   ],
                 ),
