@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:project_wallet/screen/drawer_Screen.dart';
 import 'package:project_wallet/screen/menu.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: AnimatedTextKit(
           animatedTexts: [
             WavyAnimatedText("Home",
-                speed: Duration(milliseconds: 700),
+                speed: const Duration(milliseconds: 700),
                 textStyle: const TextStyle(
                     color: Colors.black,
                     fontSize: 22,
@@ -33,13 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.indigo,
               elevation: 0,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MenuScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MenuScreen()));
               },
               child: const Icon(Icons.notifications_on_sharp))
         ],
       ),
-      drawer: const Drawer(),
+      //drawer
+      drawer: const DrawerScreen(),
       body: Stack(
         children: [
           Container(
