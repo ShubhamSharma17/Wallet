@@ -5,7 +5,7 @@ class variables {
   variables({this.image, this.name});
 }
 
-class DataOfPeoples {
+class DataOfPerson {
   static final data = [
     variables(
       image: "assets/images/person 1.png",

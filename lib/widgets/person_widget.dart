@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_wallet/models/peoples_model.dart';
+import 'package:project_wallet/models/person_model.dart';
 
 class PersonWidget extends StatelessWidget {
   final variables vars;
@@ -8,16 +8,17 @@ class PersonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20),
-      padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 15),
-      decoration: const BoxDecoration(
-          color: Colors.white54,
-          borderRadius: BorderRadius.all(Radius.circular(15))),
+      margin: const EdgeInsets.only(left: 0, right: 20),
+      padding: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+      decoration: BoxDecoration(
+          color: Colors.pinkAccent[100],
+          borderRadius: const BorderRadius.all(Radius.circular(15))),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-            height: 40,
-            width: 40,
+            height: 55,
+            width: 55,
             decoration: BoxDecoration(
                 color: Colors.white,
                 // borderRadius: BorderRadius.circular(20),
@@ -27,8 +28,16 @@ class PersonWidget extends StatelessWidget {
                 ),
                 shape: BoxShape.circle),
           ),
-          const SizedBox(height: 8),
-          Text(vars.name)
+          // const SizedBox(height: 8),
+          Text(
+            vars.name,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+              fontSize: 15,
+              fontFamily: "Source Serif Pro",
+            ),
+          )
         ],
       ),
     );
