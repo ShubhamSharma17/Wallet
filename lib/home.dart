@@ -1,7 +1,11 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project_wallet/models/cardModel.dart';
+import 'package:project_wallet/models/peoples_model.dart';
 import 'package:project_wallet/screen/drawer_Screen.dart';
-import 'package:project_wallet/screen/menu.dart';
+import 'package:project_wallet/widgets/card_widget.dart';
+import 'package:project_wallet/widgets/person_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,25 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         title: AnimatedTextKit(
           animatedTexts: [
-            WavyAnimatedText("Home",
-                speed: const Duration(milliseconds: 700),
+            WavyAnimatedText("Wallet",
+                speed: const Duration(milliseconds: 500),
                 textStyle: const TextStyle(
                     color: Colors.black,
-                    fontSize: 22,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold))
           ],
-          repeatForever: true,
+          totalRepeatCount: 10,
         ),
         actions: [
           FloatingActionButton(
               backgroundColor: Colors.indigo,
               elevation: 0,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MenuScreen()));
-              },
+              onPressed: () {},
               child: const Icon(Icons.notifications_on_sharp))
         ],
       ),
@@ -52,24 +51,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     colors: [Colors.blue, Colors.white],
                     startAngle: 1,
                     endAngle: 2.5)),
-            // color: Colors.blue[300],
-            // height: 300,
-            child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text("Wallet",
-                        style: TextStyle(fontSize: 35, color: Colors.blue)),
-                    Icon(Icons.add, color: Colors.white, size: 30),
-                  ],
-                ),
-              ),
-            ]),
           ),
           Positioned(
-              top: 400,
+              right: 20,
+              top: 50,
+              child: IconButton(
+                  onPressed: () {
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const AddNewCard(),
+                    //     ));
+                  },
+                  icon: const Icon(Icons.add))),
+          Positioned(
+              top: 280,
               right: 25,
               left: 25,
               child: Container(
@@ -84,33 +80,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
-                          Text("Send Money"),
-                          Icon(Icons.arrow_right_outlined)
+                          Text(
+                            "Send Money",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Icon(Icons.keyboard_arrow_right_rounded)
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       Container(
                         height: 100,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 7,
-                          itemBuilder: (context, index) => Container(
-                            margin: const EdgeInsets.only(left: 20, right: 20),
-                            padding: const EdgeInsets.only(
-                                top: 20, left: 20, right: 20, bottom: 15),
-                            color: Colors.transparent,
-                            // color: Colors.white,
-
-                            // height: 150,
-                            // width: 150,
-                            child: Column(
-                              children: const [
-                                CircleAvatar(
-                                    backgroundColor: Colors.greenAccent),
-                                Text("Name")
-                              ],
-                            ),
-                          ),
+                          itemCount: DataOfPeoples.data.length,
+                          itemBuilder: (context, index) {
+                            return PersonWidget(
+                              vars: DataOfPeoples.data[index],
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -126,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text("Send"),
                             ],
                           ),
-                          const Icon(Icons.arrow_right_outlined)
+                          const Icon(Icons.keyboard_arrow_right_rounded)
                         ],
                       ),
                       const SizedBox(height: 15),
@@ -177,67 +165,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     ]),
               )),
+
+          //card
           Positioned(
-            top: 200,
+            top: 80,
             // left: 23,
             child: SizedBox(
               height: 200,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 5,
+                  itemCount: DataOfCards.data.length,
                   itemBuilder: ((context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: SizedBox(
-                          height: 200,
-                          width: 350,
-                          child: Card(
-                            shadowColor: Colors.black,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text("Card No.",
-                                          style:
-                                              TextStyle(color: Colors.black45)),
-                                      Container(
-                                        height: 30,
-                                        width: 30,
-                                        child: Image.network(
-                                            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Visa.svg/640px-Visa.svg.png"),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  const Text(
-                                    '****  ****  **** 3712',
-                                    style: TextStyle(fontSize: 25),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Row(
-                                    children: const [
-                                      Text(
-                                        'Expiers',
-                                        style: TextStyle(color: Colors.black38),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        '07/09',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 22),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          )),
+                    return CardWidget(
+                      variableOfCard: DataOfCards.data[index],
                     );
                   })),
             ),
