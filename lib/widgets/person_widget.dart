@@ -20,7 +20,7 @@ class PersonWidget extends StatelessWidget {
             height: 55,
             width: 55,
             decoration: BoxDecoration(
-                color: Colors.white,
+                // color: Colors.white,
                 // borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
                   image: AssetImage(vars.image),

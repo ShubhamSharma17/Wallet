@@ -1,9 +1,11 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:project_wallet/models/cardModel.dart';
+import 'package:project_wallet/models/expenses_model.dart';
 import 'package:project_wallet/models/person_model.dart';
 import 'package:project_wallet/screen/drawer_Screen.dart';
 import 'package:project_wallet/widgets/card_widget.dart';
+import 'package:project_wallet/widgets/expenses_widget.dart';
 import 'package:project_wallet/widgets/person_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,9 +27,11 @@ class _HomeScreenState extends State<HomeScreen> {
             WavyAnimatedText("Wallet",
                 speed: const Duration(milliseconds: 500),
                 textStyle: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold))
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ))
           ],
           totalRepeatCount: 10,
         ),
@@ -51,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     gradient: SweepGradient(
                         center: Alignment.topCenter,
                         // colors: [Colors.blue, Colors.white],
-                        colors: [Colors.white38],
+                        colors: [Colors.white38, Colors.black54],
                         startAngle: 1,
                         endAngle: 2.5)),
               ),
@@ -67,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //     ));
                       },
                       icon: const Icon(Icons.add))),
+
               Positioned(
                   top: 250,
                   right: 25,
@@ -111,58 +116,47 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Row(
                                 children: const [
-                                  Text("All"),
+                                  Text(
+                                    "All",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   SizedBox(width: 10),
-                                  Text("Received"),
+                                  Text(
+                                    "Received",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   SizedBox(width: 10),
-                                  Text("Send"),
+                                  Text(
+                                    "Send",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ],
                               ),
                               const Icon(Icons.keyboard_arrow_right_rounded)
                             ],
                           ),
                           const SizedBox(height: 15),
-                          const Text("09-Sep-2022"),
+                          const Text(
+                            "09-Sep-2022",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           // const SizedBox(height: 15),
-                          Container(
+                          SizedBox(
                             height: 300,
                             child: ListView.builder(
-                              itemCount: 10,
-                              itemBuilder: (context, index) => Container(
-                                color: Colors.transparent,
-                                // color: Colors.blue[300],
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(children: [
-                                          Container(
-                                            margin: const EdgeInsets.all(15),
-                                            height: 40,
-                                            width: 40,
-                                            child: Image.network(
-                                                "https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/d2fd6cbb32432311f93bc729a65c7fb0.png"),
-                                          ),
-                                          const SizedBox(width: 15),
-                                          Column(
-                                            children: const [
-                                              Text("Sunshine Restaurant"),
-                                              Text("Date")
-                                            ],
-                                          )
-                                        ]),
-                                        const Text("Amount 2.25\$"),
-                                      ],
-                                    ),
-                                    const Divider(
-                                        color: Colors.black,
-                                        height: 5,
-                                        thickness: 2),
-                                  ],
-                                ),
-                              ),
+                              itemCount: DataofExpenses.expensesVariable.length,
+                              itemBuilder: (context, index) {
+                                return ExpensesWidget(
+                                  expensesVariable:
+                                      DataofExpenses.expensesVariable[index],
+                                );
+                              },
                             ),
                           )
                         ]),
