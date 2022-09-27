@@ -29,7 +29,8 @@ class CardWidget extends StatelessWidget {
                       Container(
                         height: 30,
                         width: 30,
-                        child: Image.network(variableOfCard.image),
+                        child: Image.network(
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Visa.svg/640px-Visa.svg.png"),
                       ),
                     ],
                   ),

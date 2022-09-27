@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_wallet/models/cardModel.dart';
 import 'package:project_wallet/models/expenses_model.dart';
 import 'package:project_wallet/models/person_model.dart';
+import 'package:project_wallet/screen/add_new_cards.dart';
 import 'package:project_wallet/screen/drawer_Screen.dart';
 import 'package:project_wallet/widgets/card_widget.dart';
 import 'package:project_wallet/widgets/expenses_widget.dart';
@@ -16,6 +17,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var tempCardNumber = "0000 0000 0000 0000";
+
+  var tempExpireDate = "06/3";
+  var tempImage =
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Visa.svg/640px-Visa.svg.png";
+  @override
+  void initState() {
+    // List list = AddNewCard.getData(tempCardNumber, tempExpireDate, tempImage);
+    // print(list);
+    super.initState();
+    // DataOfCards.addList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,11 +78,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   top: 20,
                   child: IconButton(
                       onPressed: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => const AddNewCard(),
-                        //     ));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddNewCardScreen(),
+                            ));
                       },
                       icon: const Icon(Icons.add))),
 
