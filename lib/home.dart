@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_wallet/models/cardModel.dart';
 import 'package:project_wallet/models/expenses_model.dart';
@@ -17,17 +20,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var tempCardNumber = "0000 0000 0000 0000";
-
-  var tempExpireDate = "06/3";
-  var tempImage =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Visa.svg/640px-Visa.svg.png";
   @override
   void initState() {
-    // List list = AddNewCard.getData(tempCardNumber, tempExpireDate, tempImage);
-    // print(list);
     super.initState();
-    // DataOfCards.addList();
   }
 
   @override
@@ -179,20 +174,24 @@ class _HomeScreenState extends State<HomeScreen> {
               //card
               Positioned(
                 top: 50,
-                // left: 23,
-                child: SizedBox(
-                  height: 200,
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: DataOfCards.data.length,
-                      itemBuilder: ((context, index) {
-                        return CardWidget(
-                          variableOfCard: DataOfCards.data[index],
-                        );
-                      })),
-                ),
+                child: CardWidget(),
               ),
+              // Positioned(
+              //   top: 50,
+              //   // left: 23,
+              //   child: SizedBox(
+              //     height: 200,
+              //     width: MediaQuery.of(context).size.width,
+              //     child: ListView.builder(
+              //         scrollDirection: Axis.horizontal,
+              //         itemCount: DataOfCards.data.length,
+              //         itemBuilder: ((context, index) {
+              //           return CardWidget(
+              //             variableOfCard: DataOfCards.data[index],
+              //           );
+              //         })),
+              //   ),
+              // ),
             ],
           ),
         ),
