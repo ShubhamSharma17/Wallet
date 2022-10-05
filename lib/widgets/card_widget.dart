@@ -1,17 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project_wallet/models/cardModel.dart';
 
 class CardWidget extends StatelessWidget {
-  // final VariableOfCard variableOfCard;
-
   const CardWidget({
     Key? key,
-    // required this.variableOfCard
   }) : super(key: key);
 
   @override
@@ -57,7 +52,7 @@ class CardWidget extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
-                                  userData["cardNumber"],
+                                  userData["cardNumber"].toString(),
                                   style: const TextStyle(fontSize: 25),
                                 ),
                                 const SizedBox(height: 20),

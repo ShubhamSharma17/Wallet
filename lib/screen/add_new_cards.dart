@@ -18,51 +18,148 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
   TextEditingController expireDateController = TextEditingController();
 
   saveData() async {
-    String cardNumber = cardNumberController.text.trim();
-    String expireDate = expireDateController.text.trim();
+    try {
+      String expireDate = expireDateController.text.trim();
 
-    cardNumberController.clear();
-    expireDateController.clear();
-    Map<String, dynamic> userData = {
-      "cardNumber": cardNumber,
-      "expireDate": expireDate,
-    };
+      num cNumber = int.parse(cardNumberController.text.trim());
 
-    if (cardNumber != "" && expireDate != "") {
-      await FirebaseFirestore.instance.collection("Cards").add(userData);
-      log("user data saved successfully! ");
-    } else {
-      log("Please Carefully Enter correct data! :)");
+      cardNumberController.clear();
+      expireDateController.clear();
+      Map<String, dynamic> userData = {
+        "cardNumber": cNumber,
+        "expireDate": expireDate,
+      };
+
+      if (cNumber is int && expireDate != "") {
+        await FirebaseFirestore.instance.collection("Cards").add(userData);
+        log("user data saved successfully! ");
+      } else {
+        log("Please Carefully Enter correct data! :)");
+      }
+    } on Exception catch (e) {
+      log(e.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Add New Cards")),
-      body: ListView(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(children: [
-              TextField(
-                controller: cardNumberController,
-                decoration: InputDecoration(labelText: "Card Number"),
-              ),
-              TextField(
-                controller: expireDateController,
-                decoration: InputDecoration(labelText: "Expire Date"),
-              ),
-              SizedBox(height: 10),
-              CupertinoButton(
-                child: Text("Save"),
-                onPressed: () {
-                  saveData();
-                },
-              )
-            ]),
-          )
-        ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Add New Cards"),
+        ),
+        body: Column(
+          children: [
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: cardNumberController,
+              decoration: InputDecoration(labelText: "Card Number"),
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 100,
+                  child: Expanded(
+                    child: TextField(
+                      controller: expireDateController,
+                      decoration: InputDecoration(
+                        labelText: "Expire Date",
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(
+                    onPressed: () async {
+                      DateTime? currentDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2022),
+                        lastDate: DateTime(2040),
+                      );
+                      if (currentDate == null) {
+                        return;
+                      } else {
+                        setState(() {
+                          String tempDate =
+                              "${currentDate.year}/${currentDate.month}";
+                          // log(tempDate);
+                          expireDateController.text = tempDate;
+                        });
+                      }
+                    },
+                    icon: Icon(Icons.calendar_month_outlined)),
+              ],
+            ),
+            SizedBox(height: 1),
+            SizedBox(height: 1),
+            CupertinoButton(
+              child: Text("Save"),
+              onPressed: () {
+                saveData();
+              },
+            ),
+          ],
+        ),
+
+        // body: ListView(
+        //   children: [
+        //     Padding(
+        //       padding: EdgeInsets.all(20),
+        //       child: Column(children: [
+        //         TextField(
+        //           controller: cardNumberController,
+        //           decoration: InputDecoration(labelText: "Card Number"),
+        //         ),
+        //         SizedBox(height: 10),
+        //         Container(
+        //           height: 200,
+        //           width: MediaQuery.of(context).size.width,
+        //           // color: Colors.cyan,
+        //           child: TextField(
+        //             readOnly: true,
+        //             controller: expireDateController,
+        //             decoration: InputDecoration(labelText: "Expire Date"),
+        //           ),
+        //         ),
+        //         // TextField(
+        //         //   readOnly: true,
+        //         //   controller: expireDateController,
+        //         //   decoration: InputDecoration(labelText: "Expire Date"),
+        //         // ),
+        //         IconButton(
+        //             onPressed: () async {
+        //               DateTime? currentDate = await showDatePicker(
+        //                 context: context,
+        //                 initialDate: DateTime.now(),
+        //                 firstDate: DateTime(2022),
+        //                 lastDate: DateTime(2040),
+        //               );
+        //               if (currentDate == null) {
+        //                 return;
+        //               } else {
+        //                 setState(() {
+        //                   // log(currentDate.toString());
+        //                   String tempDate =
+        //                       "${currentDate.year}/${currentDate.month}";
+        //                   // log(tempDate);
+        //                   expireDateController.text = tempDate;
+        //                 });
+        //               }
+        //             },
+        //             icon: Icon(Icons.calendar_month_outlined)),
+        //         SizedBox(height: 10),
+        //         CupertinoButton(
+        //           child: Text("Save"),
+        //           onPressed: () {
+        //             saveData();
+        //           },
+        //         )
+        //       ]),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }

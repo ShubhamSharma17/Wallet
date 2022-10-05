@@ -1,45 +1,65 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project_wallet/models/person_model.dart';
 
 class PersonWidget extends StatelessWidget {
-  final variables vars;
-  const PersonWidget({Key? key, required this.vars}) : super(key: key);
+  const PersonWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 0, right: 20),
-      padding: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-      decoration: BoxDecoration(
-          color: Colors.pinkAccent[100],
-          borderRadius: const BorderRadius.all(Radius.circular(15))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Container(
-            height: 55,
-            width: 55,
-            decoration: BoxDecoration(
-                // color: Colors.white,
-                // borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
-                  image: AssetImage(vars.image),
-                  fit: BoxFit.fill,
-                ),
-                shape: BoxShape.circle),
-          ),
-          // const SizedBox(height: 8),
-          Text(
-            vars.name,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-              fontFamily: "Source Serif Pro",
-            ),
-          )
-        ],
-      ),
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection("Peoples").snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> userData =
+                    snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                return Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    width: 110,
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CircleAvatar(
+                            radius: 30,
+                            backgroundImage:
+                                NetworkImage(userData["profilePic"])),
+                        // const SizedBox(height: 8),
+                        Text(
+                          userData["name"],
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                            fontFamily: "Source Serif Pro",
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          } else {
+            return Text("No data :(");
+          }
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }
