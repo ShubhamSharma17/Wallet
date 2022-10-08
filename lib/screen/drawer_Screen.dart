@@ -21,7 +21,7 @@ class DrawerScreen extends StatelessWidget {
             DrawerHeader(
               padding: EdgeInsets.only(top: 15),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.indigo,
               ),
               child: Center(
                   child: Column(

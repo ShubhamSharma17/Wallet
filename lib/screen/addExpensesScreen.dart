@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddExpensesScreen extends StatefulWidget {
   const AddExpensesScreen({Key? key}) : super(key: key);
@@ -30,6 +31,17 @@ getDataFromUser() {
   amountController.clear();
   dateController.clear();
 
+  displayMessage(String msg) {
+    Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.blue,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
+
   Map<String, dynamic> userDate = {
     "Place Name": placeName,
     "date": date,
@@ -37,9 +49,13 @@ getDataFromUser() {
   };
   if (placeName != "" && amount != "" && date != "") {
     FirebaseFirestore.instance.collection("Expenses").add(userDate);
-    log("User Save :)");
+    // log("User Save :)");
+    // displayMessage("User Save :)");
+    Fluttertoast.showToast(msg: "User Save :)");
   } else {
-    log("Enter All field Date");
+    // log("Enter All field Date");
+    // displayMessage("Enter All field Date");
+    Fluttertoast.showToast(msg: "Enter All field Date");
   }
 }
 

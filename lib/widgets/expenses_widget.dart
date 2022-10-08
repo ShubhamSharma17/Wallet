@@ -1,3 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -42,8 +46,6 @@ class ExpensesWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  // userData[
-                                  //     "Place Name"]
                                   userData["Place Name"],
                                   style: const TextStyle(
                                       fontSize: 16,
@@ -59,11 +61,26 @@ class ExpensesWidget extends StatelessWidget {
                               ],
                             )
                           ]),
-                          Text(
-                            userData["amount"].toString(),
-                            // "ahjsfhjks",
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
+                          Row(
+                            children: [
+                              Text(
+                                "₹${userData["amount"]}",
+                                // "ahjsfhjks",
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    String currentUser =
+                                        snapshot.data!.docs[index].id;
+                                    log(currentUser);
+                                    FirebaseFirestore.instance
+                                        .collection("Expenses")
+                                        .doc(currentUser)
+                                        .delete();
+                                  },
+                                  icon: Icon(Icons.delete))
+                            ],
                           ),
                         ],
                       ),

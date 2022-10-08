@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddNewCardScreen extends StatefulWidget {
   const AddNewCardScreen({Key? key}) : super(key: key);
@@ -16,6 +17,16 @@ class AddNewCardScreen extends StatefulWidget {
 class _AddNewCardScreenState extends State<AddNewCardScreen> {
   TextEditingController cardNumberController = TextEditingController();
   TextEditingController expireDateController = TextEditingController();
+  displayMessage(String msg) {
+    Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.blue,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
 
   saveData() async {
     try {
@@ -33,10 +44,13 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
       if (cNumber is int && expireDate != "") {
         await FirebaseFirestore.instance.collection("Cards").add(userData);
         log("user data saved successfully! ");
+        displayMessage("user data saved successfully! ");
       } else {
+        displayMessage("Please Carefully Enter correct data! :)");
         log("Please Carefully Enter correct data! :)");
       }
     } on Exception catch (e) {
+      displayMessage("Enter All Feild Credential ");
       log(e.toString());
     }
   }

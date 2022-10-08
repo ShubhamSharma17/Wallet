@@ -67,13 +67,17 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Stack(
             children: [
               Container(
-                decoration: const BoxDecoration(
-                    gradient: SweepGradient(
-                        center: Alignment.topCenter,
-                        // colors: [Colors.blue, Colors.white],
-                        colors: [Colors.white38, Colors.black54],
-                        startAngle: 1,
-                        endAngle: 2.5)),
+                decoration: BoxDecoration(
+                  // color: Colors.grey[300],
+                  gradient: SweepGradient(
+                    // center: Alignment.topCenter,
+                    colors: const [Colors.grey, Colors.white38, Colors.black38],
+
+                    // colors: [Colors.white38, Colors.black54],
+                    // startAngle: 1,
+                    // endAngle: 2.5,
+                  ),
+                ),
               ),
               Positioned(
                   right: 20,
@@ -126,7 +130,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: const BorderRadius.all(
-                                            Radius.circular(15))),
+                                            Radius.circular(15)),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 1,
+                                            spreadRadius: .5,
+                                          )
+                                        ]),
                                     height: 120,
                                     width: 100,
                                     child: Column(
@@ -165,37 +175,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 15),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //   children: [
-                          //     Row(
-                          //       children: const [
-                          //         Text(
-                          //           "All",
-                          //           style: TextStyle(
-                          //             fontWeight: FontWeight.bold,
-                          //           ),
-                          //         ),
-                          //         SizedBox(width: 10),
-                          //         Text(
-                          //           "Received",
-                          //           style: TextStyle(
-                          //             fontWeight: FontWeight.bold,
-                          //           ),
-                          //         ),
-                          //         SizedBox(width: 10),
-                          //         Text(
-                          //           "Send",
-                          //           style: TextStyle(
-                          //             fontWeight: FontWeight.bold,
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //     const Icon(Icons.keyboard_arrow_right_rounded)
-                          //   ],
-                          // ),
                           const SizedBox(height: 15),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

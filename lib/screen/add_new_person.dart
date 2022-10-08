@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
@@ -18,6 +19,16 @@ class AddNewPerson extends StatefulWidget {
 class _AddNewPersonState extends State<AddNewPerson> {
   TextEditingController nameController = TextEditingController();
   File? profilePic;
+  displayMessage(String msg) {
+    Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.blue,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
 
   saveData() async {
     String name = nameController.text.trim();
@@ -32,15 +43,17 @@ class _AddNewPersonState extends State<AddNewPerson> {
 
       TaskSnapshot taskSnapshot = await uploadTask;
       String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-      log(name);
-      log(downloadUrl.toString());
+      // log(name);
+      // log(downloadUrl.toString());
       Map<String, dynamic> userData = {
         "name": name,
         "profilePic": downloadUrl,
       };
       FirebaseFirestore.instance.collection("Peoples").add(userData);
+      displayMessage("User Save :)");
       log("User Save :)");
     } else {
+      displayMessage("Please Fill all the data :)");
       log("Please Fill all the data :)");
     }
     setState(() {
